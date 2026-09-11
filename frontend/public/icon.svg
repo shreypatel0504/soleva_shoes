@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14141A" />
+      <stop offset="50%" stop-color="#0A0A0E" />
+      <stop offset="100%" stop-color="#050507" />
+    </linearGradient>
+    <linearGradient id="bladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CCFF00" />
+      <stop offset="60%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#D4D4D8" />
+      <stop offset="100%" stop-color="#71717A" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Squircle -->
+  <rect width="512" height="512" rx="120" fill="url(#bgGrad)" />
+  <rect width="504" height="504" x="4" y="4" rx="116" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="6" />
+
+  <!-- Subtle Radial Ambient Glow -->
+  <circle cx="256" cy="256" r="180" fill="#CCFF00" opacity="0.06" filter="url(#glow)" />
+
+  <!-- Aerodynamic Kinetic Winged "S" Emblem -->
+  <g transform="translate(256, 256) scale(0.85) translate(-256, -256)">
+    <!-- Top Swept Wing -->
+    <path
+      d="M 120 180 C 200 130, 340 130, 400 200 C 370 206, 280 200, 210 230 C 160 250, 130 220, 120 180 Z"
+      fill="url(#silverGrad)"
+    />
+    
+    <!-- Central Kinetic Carbon Blade -->
+    <path
+      d="M 100 260 C 180 230, 310 230, 420 160 C 370 260, 240 330, 100 260 Z"
+      fill="url(#bladeGrad)"
+      filter="url(#glow)"
+    />
+
+    <!-- Lower Ground Propulsion Wing -->
+    <path
+      d="M 392 332 C 312 382, 172 382, 112 312 C 142 306, 232 312, 302 282 C 352 262, 382 292, 392 332 Z"
+      fill="url(#silverGrad)"
+    />
+  </g>
+</svg>
