@@ -23,15 +23,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const isFavorited = isInWishlist(product._id);
   const primaryImage = product.images[0] || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000';
-  const secondaryImage = product.images[1] || primaryImage;
 
   const [imgSrc, setImgSrc] = useState(primaryImage);
-  const [secImgSrc, setSecImgSrc] = useState(secondaryImage);
 
   React.useEffect(() => {
-    setImgSrc(product.images[0] || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000');
-    setSecImgSrc(product.images[1] || product.images[0] || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000');
-  }, [product]);
+    const colorImg = product.colors?.[selectedColorIdx]?.image;
+    setImgSrc(colorImg || product.images[0] || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000');
+  }, [product, selectedColorIdx]);
 
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -73,7 +71,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Dark Image Container with Crisp Presentation */}
       <div className="relative block aspect-[4/4.2] w-full overflow-hidden bg-[#141418] rounded-xl border border-white/[0.04] transition-all">
         <Link href={`/product/${product.slug}`} className="block w-full h-full">
-          {/* High-Resolution Sneaker Image */}
+          {/* High-Resolution Sneaker Image (Stable, does not change on hover) */}
           <Image
             src={imgSrc}
             alt={product.name}
@@ -81,25 +79,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             quality={90}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1440px) 33vw, 25vw"
             onError={() => setImgSrc('/products/apexlab/orange_profile.jpg')}
-            className={`object-cover object-center transition-all duration-700 ease-out ${
-              isHovered && secImgSrc !== imgSrc
-                ? 'opacity-0 scale-105'
-                : 'opacity-100 scale-100 group-hover:scale-105'
-            }`}
+            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
           />
-          {secImgSrc !== imgSrc && (
-            <Image
-              src={secImgSrc}
-              alt={`${product.name} alternate angle`}
-              fill
-              quality={90}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1440px) 33vw, 25vw"
-              onError={() => setSecImgSrc(imgSrc)}
-              className={`object-cover object-center transition-all duration-700 ease-out absolute inset-0 ${
-                isHovered ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
-              }`}
-            />
-          )}
         </Link>
 
         {/* Crisp Luxury Badges */}
