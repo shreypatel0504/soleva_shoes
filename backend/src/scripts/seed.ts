@@ -351,7 +351,7 @@ const productsData = [
     shortDescription: 'Seamless stretch-knit slip-on sneaker with memory cushioning.',
     images: [
       '/products/aeropulse/swiftstride_profile.jpg',
-      'https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?w=1200&auto=format&fit=crop&q=85',
+      '/products/aeropulse/swiftstride_3quarter.jpg',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -499,7 +499,7 @@ const productsData = [
     shortDescription: 'Max-cushion distance trainer engineered for fatigue resistance.',
     images: [
       '/products/aeropulse/cloudburst_profile.jpg',
-      'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=1200&auto=format&fit=crop&q=85',
+      '/products/aeropulse/cloudburst_3quarter.jpg',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -574,7 +574,7 @@ const productsData = [
     shortDescription: 'Hybrid Chelsea boot sneaker in Italian pull-up leather.',
     images: [
       '/products/veloce/chelsea_profile.jpg',
-      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1200&auto=format&fit=crop&q=85',
+      '/products/veloce/chelsea_3quarter.jpg',
       'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -611,7 +611,7 @@ const productsData = [
     shortDescription: 'Dynamic daily tempo trainer with balanced shock attenuation.',
     images: [
       '/products/showcase/road_marathon.jpg',
-      'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=1200&auto=format&fit=crop&q=85',
+      '/products/showcase/road_marathon_3quarter.jpg',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -791,7 +791,7 @@ const productsData = [
     shortDescription: 'Ultra-flexible knit sneaker with anatomical toe box.',
     images: [
       '/products/aeropulse/freespirit_profile.jpg',
-      'https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?w=1200&auto=format&fit=crop&q=85',
+      '/products/aeropulse/freespirit_3quarter.jpg',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -881,7 +881,7 @@ const productsData = [
     shortDescription: 'Sub-zero insulated winter sneaker boot with Arctic ice grip.',
     images: [
       '/products/stratos/stormchaser_profile.jpg',
-      'https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&auto=format&fit=crop&q=85',
+      '/products/stratos/stormchaser_3quarter.jpg',
       'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1544816155-12df9643f363?w=1200&auto=format&fit=crop&q=85',
     ],
