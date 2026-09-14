@@ -60,7 +60,7 @@ const ICONIC_FRANCHISES = [
   {
     name: 'SwiftStride',
     tag: 'Stretch Knit Slip-On',
-    image: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop&q=85',
+    image: '/products/aeropulse/swiftstride_profile.jpg',
     href: '/product/aeropulse-swiftstride-slip-on',
   },
 ];
@@ -99,7 +99,7 @@ const CATEGORY_SHOWCASE = [
     name: 'Road & Marathon Running',
     category: 'running',
     desc: 'Propulsion, supercritical foam & carbon plates',
-    image: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=1200&auto=format&fit=crop&q=85',
+    image: '/products/showcase/road_marathon.jpg',
     tag: 'Speed Lab',
     span: 'col-span-1 md:col-span-2 lg:col-span-2 row-span-2',
     aspect: 'aspect-[4/5] md:aspect-auto',

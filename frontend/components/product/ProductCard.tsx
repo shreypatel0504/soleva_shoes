@@ -25,6 +25,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const primaryImage = product.images[0] || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000';
   const secondaryImage = product.images[1] || primaryImage;
 
+  const [imgSrc, setImgSrc] = useState(primaryImage);
+  const [secImgSrc, setSecImgSrc] = useState(secondaryImage);
+
+  React.useEffect(() => {
+    setImgSrc(product.images[0] || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000');
+    setSecImgSrc(product.images[1] || product.images[0] || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000');
+  }, [product]);
+
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -67,24 +75,26 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <Link href={`/product/${product.slug}`} className="block w-full h-full">
           {/* High-Resolution Sneaker Image */}
           <Image
-            src={primaryImage}
+            src={imgSrc}
             alt={product.name}
             fill
             quality={90}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1440px) 33vw, 25vw"
+            onError={() => setImgSrc('/products/apexlab/orange_profile.jpg')}
             className={`object-cover object-center transition-all duration-700 ease-out ${
-              isHovered && secondaryImage !== primaryImage
+              isHovered && secImgSrc !== imgSrc
                 ? 'opacity-0 scale-105'
                 : 'opacity-100 scale-100 group-hover:scale-105'
             }`}
           />
-          {secondaryImage !== primaryImage && (
+          {secImgSrc !== imgSrc && (
             <Image
-              src={secondaryImage}
+              src={secImgSrc}
               alt={`${product.name} alternate angle`}
               fill
               quality={90}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1440px) 33vw, 25vw"
+              onError={() => setSecImgSrc(imgSrc)}
               className={`object-cover object-center transition-all duration-700 ease-out absolute inset-0 ${
                 isHovered ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
               }`}
