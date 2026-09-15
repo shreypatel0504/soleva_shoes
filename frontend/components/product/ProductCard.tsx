@@ -90,7 +90,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             className={`object-cover object-center transition-all duration-700 ease-out ${
               isHovered && secImgSrc !== imgSrc
                 ? 'opacity-0 scale-105'
-                : 'opacity-100 scale-100 group-hover:scale-105'
+                : isHovered
+                ? 'opacity-100 scale-105 -rotate-1 -translate-y-0.5'
+                : 'opacity-100 scale-100'
             }`}
           />
           {/* Angle 2: Matching 3/4 Perspective of the EXACT same shoe */}

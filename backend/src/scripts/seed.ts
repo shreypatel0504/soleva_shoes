@@ -95,7 +95,7 @@ const productsData = [
     shortDescription: 'Ultra-lightweight supercritical foam runner with carbon-infused torsion shank.',
     images: [
       'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -162,10 +162,10 @@ const productsData = [
     description: 'Subtle elegance meets street-smart craftsmanship. Handcrafted in Porto from full-grain calfskin leather with a cushioned Margom rubber cupsole. The waxed cotton laces and perforated leather lining provide climate control, forming the cornerstone of the modern luxury wardrobe.',
     shortDescription: 'Full-grain calfskin court sneaker with Italian Margom cupsole.',
     images: [
-      'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=1200&auto=format&fit=crop&q=85',
+      '/products/apexlab/white_profile.jpg',
+      '/products/apexlab/white_threequarter.jpg',
+      '/products/apexlab/white_sole.jpg',
+      '/products/apexlab/white_heel.jpg',
     ],
     price: 19995,
     compareAtPrice: 22995,
@@ -173,23 +173,31 @@ const productsData = [
       {
         name: 'Alabaster White',
         hex: '#FFFFFF',
-        image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1200&auto=format&fit=crop&q=85',
+        image: '/products/apexlab/white_profile.jpg',
         images: [
-          'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1200&auto=format&fit=crop&q=85',
-          'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=1200&auto=format&fit=crop&q=85',
-          'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=1200&auto=format&fit=crop&q=85',
-          'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=1200&auto=format&fit=crop&q=85',
+          '/products/apexlab/white_profile.jpg',
+          '/products/apexlab/white_threequarter.jpg',
+          '/products/apexlab/white_sole.jpg',
+          '/products/apexlab/white_heel.jpg',
         ],
       },
       {
         name: 'Sandstone Grey',
         hex: '#D1D5DB',
-        image: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=1200&auto=format&fit=crop&q=85',
+        image: '/products/apexlab/white_profile.jpg',
+        images: [
+          '/products/apexlab/white_profile.jpg',
+          '/products/apexlab/white_threequarter.jpg',
+        ],
       },
       {
         name: 'Midnight Jet',
         hex: '#18181B',
-        image: 'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=1200&auto=format&fit=crop&q=85',
+        image: '/products/apexlab/white_profile.jpg',
+        images: [
+          '/products/apexlab/white_profile.jpg',
+          '/products/apexlab/white_threequarter.jpg',
+        ],
       },
     ],
     sizes: [8, 8.5, 9, 9.5, 10, 10.5, 11, 12],
@@ -219,7 +227,7 @@ const productsData = [
     shortDescription: 'Weatherproof technical trail sneaker with quick-lace drawcord.',
     images: [
       'https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1539185441755-769473a23570?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1544816155-12df9643f363?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -314,7 +322,7 @@ const productsData = [
     shortDescription: 'Retro-inspired street court sneaker with deconstructed details.',
     images: [
       'https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -389,7 +397,7 @@ const productsData = [
     shortDescription: 'High-performance basketball high-top with TPU chassis and dual bounce unit.',
     images: [
       'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -426,7 +434,7 @@ const productsData = [
     shortDescription: 'Water-repellent Tuscan suede driving moccasin with pebble sole.',
     images: [
       'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -463,7 +471,7 @@ const productsData = [
     shortDescription: 'All-black tactical lifestyle sneaker with 3M reflective hits.',
     images: [
       'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -537,7 +545,7 @@ const productsData = [
     shortDescription: 'Waterproof mid-cut technical trekking shoe with rock plate.',
     images: [
       'https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1539185441755-769473a23570?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1544816155-12df9643f363?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -641,7 +649,7 @@ const productsData = [
     shortDescription: 'Flexible studio training shoe with arch contour support.',
     images: [
       'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1565814636199-ae8133055c1c?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -671,7 +679,7 @@ const productsData = [
     shortDescription: '3D printed parametric heel sneaker with futuristic tech aesthetic.',
     images: [
       'https://images.unsplash.com/photo-1562183241-b937e95585b6?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1520256862855-398228c41684?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1562183241-b937e95585b6?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -701,7 +709,7 @@ const productsData = [
     shortDescription: 'Water-ready hybrid adventure sandal shoe with Vibram tread.',
     images: [
       'https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1595341888016-a392ef81b7de?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -731,7 +739,7 @@ const productsData = [
     shortDescription: 'Premium high-top skate and street sneaker with padded collar.',
     images: [
       'https://images.unsplash.com/photo-1597045566677-8cf032ed6634?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1516478177764-9fe5bd7e9717?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1597045566677-8cf032ed6634?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -761,7 +769,7 @@ const productsData = [
     shortDescription: 'Hybrid dress derby shoe with ultra-soft sport sole.',
     images: [
       'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1617606002779-51d866bdd1d1?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -821,7 +829,7 @@ const productsData = [
     shortDescription: 'Stable flat-base training shoe for weightlifting and functional fitness.',
     images: [
       'https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1518002171953-a080ee817e1f?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -851,7 +859,7 @@ const productsData = [
     shortDescription: 'Durable and bouncy kids performance sneaker with easy strap.',
     images: [
       'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -911,7 +919,7 @@ const productsData = [
     shortDescription: 'Merino knit penny loafer hybrid with hand-burnished leather trim.',
     images: [
       'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=1200&auto=format&fit=crop&q=85',
     ],
@@ -941,7 +949,7 @@ const productsData = [
     shortDescription: 'Natural zero-drop lightweight racer with tactile road feel.',
     images: [
       'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=1200&auto=format&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1463100099107-aa0980c362e6?w=1200&auto=format&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
       'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=1200&auto=format&fit=crop&q=85',
     ],
