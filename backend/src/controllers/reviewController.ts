@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { Review } from '../models/Review';
 import { Product } from '../models/Product';
 import { Order } from '../models/Order';
@@ -8,6 +9,18 @@ import { AuthRequest } from '../middleware/authMiddleware';
 export const getProductReviews = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return sendSuccess({
+        res,
+        message: 'Reviews retrieved successfully',
+        data: {
+          reviews: [],
+          total: 0,
+          averageRating: 0,
+          distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        },
+      });
+    }
 
     const reviews = await Review.find({ product: productId })
       .sort({ createdAt: -1 })
@@ -47,6 +60,9 @@ export const createReview = async (req: AuthRequest, res: Response) => {
     if (!req.user) return sendError(res, 401, 'Unauthorized');
 
     const { productId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return sendError(res, 404, 'Product not found');
+    }
     const { rating, title, comment } = req.body;
 
     const product = await Product.findById(productId);

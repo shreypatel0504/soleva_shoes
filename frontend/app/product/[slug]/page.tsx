@@ -117,6 +117,21 @@ export default function ProductDetailsPage() {
 
   const isFavorited = isInWishlist(product._id);
 
+  const handleReviewSubmitted = (newReview: any) => {
+    setReviews((prev) => [newReview, ...prev]);
+    setReviewStats((prev) => {
+      const newTotal = (prev.total || 0) + 1;
+      const currentAvg = prev.averageRating || product.rating || 5;
+      const newAvg = Number(
+        (((currentAvg * (prev.total || 0)) + (newReview.rating || 5)) / newTotal).toFixed(1)
+      );
+      return { total: newTotal, averageRating: newAvg };
+    });
+    setProduct((prev) =>
+      prev ? { ...prev, reviewCount: (prev.reviewCount || 0) + 1 } : prev
+    );
+  };
+
   const handleAddToCart = async () => {
     if (!selectedSize) {
       setSizeError(true);
@@ -519,7 +534,7 @@ export default function ProductDetailsPage() {
           isOpen={isReviewModalOpen}
           onClose={() => setIsReviewModalOpen(false)}
           productId={product._id}
-          onReviewSubmitted={() => {}}
+          onReviewSubmitted={handleReviewSubmitted}
         />
       )}
     </div>

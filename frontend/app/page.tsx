@@ -21,7 +21,7 @@ import {
   Star,
 } from 'lucide-react';
 import { Product } from '@/lib/types';
-import { productApi } from '@/lib/api';
+import { productApi, utilityApi } from '@/lib/api';
 import { ProductCard } from '@/components/product/ProductCard';
 import { useToast } from '@/context/ToastContext';
 
@@ -169,12 +169,13 @@ export default function HomePage() {
   const [isNotified, setIsNotified] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
 
   const carouselRef = useRef<HTMLDivElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToast();
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail || !newsletterEmail.includes('@')) {
       showToast({
@@ -184,12 +185,24 @@ export default function HomePage() {
       });
       return;
     }
-    setNewsletterSuccess(true);
-    showToast({
-      type: 'success',
-      title: 'VIP Club Unlocked',
-      message: 'Welcome to SOLEVA VIP Club! Promo code WELCOME10 unlocked.',
-    });
+    setNewsletterLoading(true);
+    try {
+      const res = await utilityApi.subscribeNewsletter(newsletterEmail.trim());
+      setNewsletterSuccess(true);
+      showToast({
+        type: 'success',
+        title: 'VIP Club Unlocked',
+        message: res.data?.message || 'Welcome to SOLEVA VIP Club! Promo code WELCOME10 unlocked.',
+      });
+    } catch (err: any) {
+      showToast({
+        type: 'error',
+        title: 'Subscription Error',
+        message: err.response?.data?.message || 'Unable to register email. Please try again.',
+      });
+    } finally {
+      setNewsletterLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -849,8 +862,12 @@ export default function HomePage() {
                     required
                   />
                 </div>
-                <button type="submit" className="btn-nike-white text-xs whitespace-nowrap">
-                  Unlock 10% Off
+                <button
+                  type="submit"
+                  disabled={newsletterLoading}
+                  className="btn-nike-white text-xs whitespace-nowrap disabled:opacity-50"
+                >
+                  {newsletterLoading ? 'Joining...' : 'Unlock 10% Off'}
                 </button>
               </form>
             )}

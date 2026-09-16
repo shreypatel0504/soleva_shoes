@@ -7,7 +7,7 @@ export const productSchema = z.object({
   gender: z.enum(['men', 'women', 'unisex', 'kids']).default('unisex'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   shortDescription: z.string().optional(),
-  images: z.array(z.string().url('Image must be a valid URL')).min(1, 'At least one image is required'),
+  images: z.array(z.string().min(1, 'Image path is required')).min(1, 'At least one image is required'),
   price: z.number().positive('Price must be greater than 0'),
   compareAtPrice: z.number().positive().optional(),
   colors: z.array(

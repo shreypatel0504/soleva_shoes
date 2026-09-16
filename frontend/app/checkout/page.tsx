@@ -15,7 +15,7 @@ import {
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
-import { orderApi } from '@/lib/api';
+import { orderApi, couponApi } from '@/lib/api';
 import { formatCurrency } from '@/lib/utils';
 
 export default function CheckoutPage() {
@@ -70,9 +70,52 @@ export default function CheckoutPage() {
     nameOnCard: user?.name || 'Aarav Sharma',
   });
 
-  const estimatedTax = Math.round(subtotal * 0.18);
+  // Coupon & Promo State
+  const [couponCode, setCouponCode] = useState('');
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<{
+    code: string;
+    discountType: string;
+    discountValue: number;
+    discountAmount: number;
+  } | null>(null);
+
+  const handleApplyCoupon = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!couponCode.trim()) return;
+    setCouponLoading(true);
+    try {
+      const res = await couponApi.validateCoupon(couponCode.trim(), subtotal);
+      if (res.data?.success && res.data?.data) {
+        setAppliedCoupon(res.data.data);
+        showToast({
+          type: 'success',
+          title: 'Coupon Applied!',
+          message: `Promo code ${res.data.data.code} applied successfully!`,
+        });
+      }
+    } catch (err: any) {
+      showToast({
+        type: 'error',
+        title: 'Invalid Promo Code',
+        message: err.response?.data?.message || 'Invalid or expired coupon code.',
+      });
+      setAppliedCoupon(null);
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode('');
+  };
+
+  const discount = appliedCoupon ? appliedCoupon.discountAmount : 0;
+  const taxableAmount = Math.max(0, subtotal - discount);
+  const estimatedTax = Math.round(taxableAmount * 0.18);
   const shippingFee = deliveryOption.price;
-  const grandTotal = subtotal + shippingFee;
+  const grandTotal = taxableAmount + shippingFee;
 
   const handleAddressSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,11 +161,24 @@ export default function CheckoutPage() {
           pincode: address.pincode,
           country: address.country,
         },
-        paymentMethod: paymentMethod === 'card' ? 'card' : 'cash_on_delivery',
-        shippingMethod: deliveryOption.id,
+        deliveryOption: {
+          id: deliveryOption.id,
+          title: deliveryOption.title,
+          price: deliveryOption.price,
+          estimatedDays: deliveryOption.estimatedDays,
+        },
+        paymentMethod:
+          paymentMethod === 'card'
+            ? 'Credit Card'
+            : paymentMethod === 'upi'
+            ? 'UPI / NetBanking'
+            : paymentMethod === 'cod'
+            ? 'Cash on Delivery'
+            : 'Credit Card',
+        couponCode: appliedCoupon?.code || undefined,
         shippingFee,
         tax: estimatedTax,
-        discount: 0,
+        discount,
         subtotal,
         total: grandTotal,
       };
@@ -669,11 +725,53 @@ export default function CheckoutPage() {
             ))}
           </div>
 
+          {/* Promo / Coupon Code Section */}
+          <div className="pt-2">
+            {appliedCoupon ? (
+              <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs">
+                <div className="flex items-center gap-2 text-emerald-400 font-semibold">
+                  <span>✓</span>
+                  <span>Code <strong>{appliedCoupon.code}</strong> applied (-{formatCurrency(appliedCoupon.discountAmount)})</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={removeCoupon}
+                  className="text-neutral-400 hover:text-white text-xs underline ml-2"
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleApplyCoupon} className="flex gap-2">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                  placeholder="Promo code (e.g. WELCOME10)"
+                  className="flex-1 bg-[#18181C] border border-[#2A2A32] rounded-xl px-3 py-2 text-xs text-white uppercase placeholder:normal-case placeholder:text-neutral-500 focus:outline-none focus:border-white transition-colors"
+                />
+                <button
+                  type="submit"
+                  disabled={couponLoading || !couponCode.trim()}
+                  className="px-4 py-2 bg-white text-black text-xs font-bold rounded-xl hover:bg-neutral-200 transition-colors disabled:opacity-40"
+                >
+                  {couponLoading ? 'Checking...' : 'Apply'}
+                </button>
+              </form>
+            )}
+          </div>
+
           <div className="space-y-2.5 pt-4 border-t border-[#222228] text-xs text-neutral-300">
             <div className="flex justify-between">
               <span>Subtotal</span>
               <span className="font-semibold text-white">{formatCurrency(subtotal)}</span>
             </div>
+            {discount > 0 && (
+              <div className="flex justify-between text-emerald-400 font-medium">
+                <span>Promo Discount ({appliedCoupon?.code})</span>
+                <span>-{formatCurrency(discount)}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span>Shipping ({deliveryOption.title})</span>
               <span className="font-semibold text-white">
@@ -682,7 +780,7 @@ export default function CheckoutPage() {
             </div>
             <div className="flex justify-between">
               <span>GST (18% Included)</span>
-              <span className="font-semibold text-white">{formatCurrency(Math.round(subtotal * (0.18 / 1.18)))}</span>
+              <span className="font-semibold text-white">{formatCurrency(Math.round(taxableAmount * (0.18 / 1.18)))}</span>
             </div>
 
             <div className="pt-3 border-t border-[#222228] flex justify-between items-end">

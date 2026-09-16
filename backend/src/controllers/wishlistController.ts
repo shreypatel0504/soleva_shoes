@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import mongoose from 'mongoose';
 import { Wishlist } from '../models/Wishlist';
 import { Product } from '../models/Product';
 import { sendSuccess, sendError } from '../utils/apiResponse';
@@ -29,6 +30,9 @@ export const addToWishlist = async (req: AuthRequest, res: Response) => {
     if (!req.user) return sendError(res, 401, 'Unauthorized');
 
     const { productId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return sendError(res, 404, 'Product not found');
+    }
     const product = await Product.findById(productId);
     if (!product) return sendError(res, 404, 'Product not found');
 
@@ -59,6 +63,9 @@ export const removeFromWishlist = async (req: AuthRequest, res: Response) => {
     if (!req.user) return sendError(res, 401, 'Unauthorized');
 
     const { productId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return sendError(res, 404, 'Product not found');
+    }
 
     const wishlist = await Wishlist.findOne({ user: req.user._id });
     if (!wishlist) return sendError(res, 404, 'Wishlist not found');
@@ -85,6 +92,9 @@ export const toggleWishlist = async (req: AuthRequest, res: Response) => {
     if (!req.user) return sendError(res, 401, 'Unauthorized');
 
     const { productId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return sendError(res, 404, 'Product not found');
+    }
     const product = await Product.findById(productId);
     if (!product) return sendError(res, 404, 'Product not found');
 

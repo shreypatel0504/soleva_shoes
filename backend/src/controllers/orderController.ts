@@ -1,5 +1,9 @@
 import { Response } from 'express';
+import mongoose from 'mongoose';
+import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
 import { Order, OrderStatus } from '../models/Order';
+import { User } from '../models/User';
 import { Cart } from '../models/Cart';
 import { Coupon } from '../models/Coupon';
 import { sendSuccess, sendError } from '../utils/apiResponse';
@@ -7,8 +11,6 @@ import { AuthRequest } from '../middleware/authMiddleware';
 
 export const createOrder = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return sendError(res, 401, 'Unauthorized');
-
     const {
       items,
       shippingAddress,
@@ -20,6 +22,42 @@ export const createOrder = async (req: AuthRequest, res: Response) => {
 
     if (!items || items.length === 0) {
       return sendError(res, 400, 'Order must contain at least one product');
+    }
+
+    if (!shippingAddress || !shippingAddress.email || !shippingAddress.fullName) {
+      return sendError(res, 400, 'Complete shipping address and contact email are required');
+    }
+
+    // Resolve or provision user for relational database integrity
+    let orderUserId = req.user?._id;
+    if (!orderUserId) {
+      const customerEmail = (shippingAddress.email || '').toLowerCase().trim();
+      let existingUser = await User.findOne({ email: customerEmail });
+      if (!existingUser) {
+        const randomPassword = crypto.randomBytes(12).toString('hex');
+        const hashedPassword = await bcrypt.hash(randomPassword, 10);
+        existingUser = await User.create({
+          name: shippingAddress.fullName || 'Valued Customer',
+          email: customerEmail,
+          password: hashedPassword,
+          phone: shippingAddress.phone || '',
+          role: 'customer',
+          addresses: [
+            {
+              fullName: shippingAddress.fullName,
+              phone: shippingAddress.phone,
+              street: shippingAddress.address,
+              apartment: shippingAddress.apartment || '',
+              city: shippingAddress.city,
+              state: shippingAddress.state,
+              pincode: shippingAddress.pincode,
+              country: shippingAddress.country || 'India',
+              isDefault: true,
+            },
+          ],
+        });
+      }
+      orderUserId = existingUser._id;
     }
 
     // Calculate subtotal
@@ -64,7 +102,7 @@ export const createOrder = async (req: AuthRequest, res: Response) => {
 
     const order = await Order.create({
       orderNumber,
-      user: req.user._id,
+      user: orderUserId,
       items: items.map((item: any) => ({
         ...item,
         total: item.price * item.quantity,
@@ -90,8 +128,10 @@ export const createOrder = async (req: AuthRequest, res: Response) => {
       ],
     });
 
-    // Clear cart upon successful order
-    await Cart.findOneAndUpdate({ user: req.user._id }, { items: [] });
+    // Clear cart if user was authenticated
+    if (req.user) {
+      await Cart.findOneAndUpdate({ user: req.user._id }, { items: [] });
+    }
 
     return sendSuccess({
       res,
@@ -122,17 +162,22 @@ export const getMyOrders = async (req: AuthRequest, res: Response) => {
 
 export const getOrderById = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return sendError(res, 401, 'Unauthorized');
-
     const { id } = req.params;
-    const order = await Order.findById(id).populate('items.product');
+    let query: any = {};
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      query = { _id: id };
+    } else {
+      query = { orderNumber: id };
+    }
+
+    const order = await Order.findOne(query).populate('items.product');
 
     if (!order) {
       return sendError(res, 404, 'Order not found');
     }
 
-    // Verify ownership or admin role
-    if (order.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+    // Verify ownership or admin role (allow guest access on direct confirmation link)
+    if (req.user && order.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
       return sendError(res, 403, 'Unauthorized access to this order');
     }
 

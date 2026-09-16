@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import mongoose from 'mongoose';
 import { Order } from '../models/Order';
 import { User } from '../models/User';
 import { Product } from '../models/Product';
@@ -166,6 +167,9 @@ export const getCustomers = async (req: AuthRequest, res: Response) => {
 export const toggleCustomerStatus = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return sendError(res, 404, 'Customer not found');
+    }
     const user = await User.findById(id);
 
     if (!user) return sendError(res, 404, 'Customer not found');

@@ -5,17 +5,16 @@ import {
   getOrderById,
   cancelOrder,
 } from '../controllers/orderController';
-import { authenticate } from '../middleware/authMiddleware';
+import { authenticate, optionalAuth } from '../middleware/authMiddleware';
 import { validate } from '../middleware/validateMiddleware';
 import { createOrderSchema } from '../validators/orderValidators';
 
 const router = Router();
 
-router.use(authenticate);
-
-router.post('/', validate(createOrderSchema), createOrder);
-router.get('/', getMyOrders);
-router.get('/:id', getOrderById);
-router.post('/:id/cancel', cancelOrder);
+router.post('/', optionalAuth, validate(createOrderSchema), createOrder);
+router.get('/my-orders', authenticate, getMyOrders);
+router.get('/', authenticate, getMyOrders);
+router.get('/:id', optionalAuth, getOrderById);
+router.post('/:id/cancel', authenticate, cancelOrder);
 
 export default router;

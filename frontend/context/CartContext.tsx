@@ -108,12 +108,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (token) {
       try {
-        await cartApi.addToCart({
+        const res = await cartApi.addToCart({
           productId: product._id,
           size,
           color,
           quantity,
         });
+        if (res.data?.data?.cart?.items) {
+          saveLocalCart(res.data.data.cart.items);
+        }
       } catch (err) {
         console.error('Failed to sync item to backend cart', err);
       }
