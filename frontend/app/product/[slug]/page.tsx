@@ -31,7 +31,7 @@ export default function ProductDetailsPage() {
   const [loading, setLoading] = useState(true);
 
   // Selection states
-  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [selectedSize, setSelectedSize] = useState<number | string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [sizeError, setSizeError] = useState(false);
 
@@ -142,12 +142,16 @@ export default function ProductDetailsPage() {
   };
 
   const getSubtitle = () => {
+    const isClothing = product.department === 'clothing';
     const gender = product.gender
       ? product.gender.charAt(0).toUpperCase() + product.gender.slice(1)
       : "Men's";
     const cat = product.category
       ? product.category.charAt(0).toUpperCase() + product.category.slice(1)
-      : 'Shoes';
+      : isClothing ? 'Apparel' : 'Shoes';
+    if (isClothing) {
+      return `${gender}'s Technical ${cat}`;
+    }
     return `${gender} ${cat} Shoes`;
   };
 
@@ -345,11 +349,15 @@ export default function ProductDetailsPage() {
             </div>
           )}
 
-          {/* Nike Size Selection Grid (Dark Mode) */}
+          {/* Size Selection Grid */}
           <div className="space-y-2 pt-2">
             <div className="flex items-center justify-between text-xs">
               <span className={`font-semibold ${sizeError ? 'text-red-500' : 'text-neutral-300'}`}>
-                {sizeError ? 'Please select a size' : 'Select Size (UK)'}
+                {sizeError
+                  ? 'Please select a size'
+                  : product.department === 'clothing'
+                  ? 'Select Size (Apparel)'
+                  : 'Select Size (UK)'}
               </span>
               <button
                 onClick={() => setIsSizeGuideOpen(true)}
@@ -360,22 +368,22 @@ export default function ProductDetailsPage() {
             </div>
 
             <div className="grid grid-cols-3 gap-2">
-              {(product.sizes || [6, 7, 8, 9, 10, 11]).map((sz) => {
+              {(product.sizes || (product.department === 'clothing' ? ['S', 'M', 'L', 'XL'] : [6, 7, 8, 9, 10, 11])).map((sz) => {
                 const isSelected = selectedSize === sz;
                 return (
                   <button
-                    key={sz}
+                    key={String(sz)}
                     onClick={() => {
                       setSelectedSize(sz);
                       setSizeError(false);
                     }}
-                    className={`py-3 text-sm font-medium rounded-lg border transition-all text-center ${
+                    className={`py-3 text-sm font-semibold rounded-lg border transition-all text-center ${
                       isSelected
                         ? 'border-white bg-white text-black font-bold'
                         : 'border-[#2D2D35] bg-[#141416] text-neutral-200 hover:border-neutral-400'
                     }`}
                   >
-                    UK {sz}
+                    {product.department === 'clothing' ? sz : `UK ${sz}`}
                   </button>
                 );
               })}
@@ -422,12 +430,26 @@ export default function ProductDetailsPage() {
                 )}
               </button>
               {openSection === 'desc' && (
-                <div className="pt-3 text-neutral-300 leading-relaxed text-sm space-y-2">
+                <div className="pt-3 text-neutral-300 leading-relaxed text-sm space-y-3">
                   <p>{product.description}</p>
+
+                  {product.specifications?.fabric && (
+                    <div className="p-3.5 bg-[#141416] border border-[#24242A] rounded-xl space-y-2 text-xs">
+                      <p className="font-bold text-white uppercase tracking-wider text-[11px]">Fabric &amp; Engineering</p>
+                      <p className="text-neutral-300 leading-relaxed">{product.specifications.fabric}</p>
+                      {product.specifications.fit && (
+                        <p className="text-neutral-400"><strong className="text-white">Fit:</strong> {product.specifications.fit}</p>
+                      )}
+                      {product.specifications.care && (
+                        <p className="text-neutral-400"><strong className="text-white">Care:</strong> {product.specifications.care}</p>
+                      )}
+                    </div>
+                  )}
+
                   <ul className="list-disc pl-5 pt-2 space-y-1 text-xs text-neutral-400">
                     <li>Colour Shown: {selectedColor || 'Signature'}</li>
                     <li>Style Code: {product.sku}</li>
-                    <li>Country of Origin: Vietnam / Indonesia</li>
+                    <li>Department: {product.department === 'clothing' ? 'High-Performance Apparel' : 'Engineered Footwear'}</li>
                   </ul>
                 </div>
               )}
@@ -528,7 +550,11 @@ export default function ProductDetailsPage() {
       )}
 
       {/* Modals */}
-      <SizeGuideModal isOpen={isSizeGuideOpen} onClose={() => setIsSizeGuideOpen(false)} />
+      <SizeGuideModal
+        isOpen={isSizeGuideOpen}
+        onClose={() => setIsSizeGuideOpen(false)}
+        initialTab={product.department === 'clothing' ? 'clothing' : 'footwear'}
+      />
       {product && (
         <ReviewFormModal
           isOpen={isReviewModalOpen}

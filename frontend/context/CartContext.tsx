@@ -13,7 +13,7 @@ interface CartContextType {
   isCartOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
-  addToCart: (product: Product, size: number, color: string, quantity?: number) => Promise<void>;
+  addToCart: (product: Product, size: number | string, color: string, quantity?: number) => Promise<void>;
   updateQuantity: (index: number, quantity: number) => Promise<void>;
   removeFromCart: (index: number) => Promise<void>;
   clearCart: () => Promise<void>;
@@ -68,7 +68,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const addToCart = async (
     product: Product,
-    size: number,
+    size: number | string,
     color: string,
     quantity: number = 1
   ) => {

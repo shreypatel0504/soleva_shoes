@@ -40,11 +40,13 @@ export const addToCart = async (req: AuthRequest, res: Response) => {
       cart = new Cart({ user: req.user._id, items: [] });
     }
 
+    const parsedSize = isNaN(Number(size)) ? String(size).trim().toUpperCase() : Number(size);
+
     // Check if item with same size and color already in cart
     const existingIndex = cart.items.findIndex(
       (item) =>
         item.product.toString() === productId &&
-        item.size === Number(size) &&
+        String(item.size).toUpperCase() === String(parsedSize).toUpperCase() &&
         item.color.toLowerCase() === color.toLowerCase()
     );
 
@@ -55,7 +57,7 @@ export const addToCart = async (req: AuthRequest, res: Response) => {
         product: product._id as any,
         name: product.name,
         image: product.images[0],
-        size: Number(size),
+        size: parsedSize,
         color,
         quantity: Number(quantity),
         price: product.price,

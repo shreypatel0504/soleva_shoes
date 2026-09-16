@@ -50,6 +50,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
               { name: 'New & Featured', href: '/shop?isNewArrival=true' },
               { name: 'Men', href: '/shop?gender=men' },
               { name: 'Women', href: '/shop?gender=women' },
+              { name: 'Clothing', href: '/shop?department=clothing' },
               { name: 'Kids', href: '/shop?gender=kids' },
               { name: 'Sale', href: '/shop?onSale=true', highlight: true },
               { name: 'SNKRS', href: '/shop?category=sneakers' },

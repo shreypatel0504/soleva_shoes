@@ -594,6 +594,46 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 5.5. EXCLUSIVE APPAREL DROP HERO: "SOLEVA APPAREL LINE" */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="relative w-full aspect-[16/9] sm:aspect-[24/9] overflow-hidden bg-[#0A0A0D] border border-white/[0.08] rounded-2xl sm:rounded-3xl shadow-2xl">
+          <Image
+            src="/products/clothing/windrunner_black_front.jpg"
+            alt="SOLEVA Engineered Apparel Line"
+            fill
+            className="object-cover object-center brightness-75 group-hover:scale-105 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/95 via-black/70 to-transparent flex items-center">
+            <div className="p-6 sm:p-12 lg:p-16 max-w-xl text-white space-y-3 sm:space-y-4">
+              <p className="text-xs font-bold tracking-widest uppercase text-[#CCFF00] flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>New Launch • High-Performance Apparel</span>
+              </p>
+              <h2 className="font-nike text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[0.95] text-white">
+                PRECISION IN MOTION.
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-300 font-normal leading-relaxed">
+                Introducing the SOLEVA Apparel Line. 480 GSM structural French Terry hoodies, 2.5-layer storm windrunners, seamless body-mapped training tops, and articulated tech joggers.
+              </p>
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/shop?department=clothing"
+                  className="btn-nike-white text-xs font-bold"
+                >
+                  Shop Clothing Line
+                </Link>
+                <Link
+                  href="/product/aerotech-storm-windrunner"
+                  className="btn-nike-outline text-xs"
+                >
+                  View Windrunner (₹8,999)
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 6. FEATURED 3-COLUMN LIFESTYLE EDITORIAL GRID */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
         <h2 className="text-xl sm:text-3xl font-bold tracking-tight text-white mb-6">

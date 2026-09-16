@@ -5,7 +5,7 @@ export interface ICartItem {
   product: mongoose.Types.ObjectId;
   name: string;
   image: string;
-  size: number;
+  size: number | string;
   color: string;
   quantity: number;
   price: number;
@@ -24,7 +24,7 @@ const CartItemSchema = new Schema<ICartItem>({
   product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
   name: { type: String, required: true },
   image: { type: String, required: true },
-  size: { type: Number, required: true },
+  size: { type: Schema.Types.Mixed, required: true },
   color: { type: String, required: true },
   quantity: { type: Number, required: true, min: 1, default: 1 },
   price: { type: Number, required: true, min: 0 },

@@ -4,6 +4,8 @@ import React from 'react';
 import { RotateCcw } from 'lucide-react';
 
 interface FilterSidebarProps {
+  department: string;
+  setDepartment: (dept: string) => void;
   category: string;
   setCategory: (cat: string) => void;
   gender: string;
@@ -25,12 +27,28 @@ interface FilterSidebarProps {
   onReset: () => void;
 }
 
-const CATEGORIES = [
-  { label: 'All Shoes', value: '' },
-  { label: 'Running', value: 'running' },
-  { label: 'Sneakers & Street', value: 'sneakers' },
+const DEPARTMENTS = [
+  { label: 'All Items', value: '' },
+  { label: 'Footwear', value: 'footwear' },
+  { label: 'Clothing', value: 'clothing' },
+];
+
+const FOOTWEAR_CATEGORIES = [
+  { label: 'All Footwear', value: '' },
+  { label: 'Running Shoes', value: 'running' },
+  { label: 'Sneakers & Streetwear', value: 'sneakers' },
   { label: 'Casual & Lifestyle', value: 'casual' },
   { label: 'Training & Gym', value: 'sports' },
+  { label: 'Basketball High-Tops', value: 'basketball' },
+];
+
+const CLOTHING_CATEGORIES = [
+  { label: 'All Apparel', value: '' },
+  { label: 'Jackets & Windrunners', value: 'jackets' },
+  { label: 'Hoodies & Fleece', value: 'hoodies' },
+  { label: 'Performance T-Shirts', value: 't-shirts' },
+  { label: 'Cargo Pants & Joggers', value: 'pants' },
+  { label: 'Luxury Tracksuits', value: 'tracksuits' },
 ];
 
 const GENDERS = [
@@ -42,7 +60,8 @@ const GENDERS = [
 
 const BRANDS = ['All Brands', 'SOLEVA Core', 'AeroPulse', 'Veloce', 'Stratos', 'ApexLab'];
 
-const SIZES = [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12];
+const FOOTWEAR_SIZES = [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12];
+const CLOTHING_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
 const COLORS = [
   { name: 'Black', hex: '#000000' },
@@ -56,6 +75,8 @@ const COLORS = [
 ];
 
 export const FilterSidebar: React.FC<FilterSidebarProps> = ({
+  department,
+  setDepartment,
   category,
   setCategory,
   gender,
@@ -76,6 +97,9 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   setInStockOnly,
   onReset,
 }) => {
+  const showFootwearSizes = department === 'footwear' || department === '';
+  const showClothingSizes = department === 'clothing' || department === '';
+
   return (
     <div className="space-y-6 text-[#EDEDED] pr-2">
       {/* Header with Reset */}
@@ -88,6 +112,34 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <RotateCcw className="w-3 h-3" />
           <span>Reset All</span>
         </button>
+      </div>
+
+      {/* 0. Department Selector (Segmented Pill) */}
+      <div className="pb-5 border-b border-[#222228]">
+        <h4 className="text-sm font-semibold text-white mb-2.5">Department</h4>
+        <div className="grid grid-cols-3 gap-1 p-1 bg-[#141416] border border-[#26262E] rounded-xl">
+          {DEPARTMENTS.map((d) => {
+            const isSelected = department.toLowerCase() === d.value.toLowerCase();
+            return (
+              <button
+                key={d.label}
+                type="button"
+                onClick={() => {
+                  setDepartment(d.value);
+                  setCategory('');
+                  setSelectedSize('');
+                }}
+                className={`py-1.5 text-xs font-semibold rounded-lg transition-all text-center ${
+                  isSelected
+                    ? 'bg-white text-black shadow-sm font-bold'
+                    : 'text-neutral-400 hover:text-white'
+                }`}
+              >
+                {d.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* 1. Gender */}
@@ -117,22 +169,95 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
       {/* 2. Category Filter */}
       <div className="pb-5 border-b border-[#222228]">
         <h4 className="text-sm font-semibold text-white mb-3">Category</h4>
-        <div className="space-y-2">
-          {CATEGORIES.map((cat) => {
-            const isSelected = category.toLowerCase() === cat.value.toLowerCase();
-            return (
-              <button
-                key={cat.label}
-                onClick={() => setCategory(isSelected ? '' : cat.value)}
-                className={`block w-full text-left text-sm py-0.5 transition-colors ${
-                  isSelected ? 'font-bold text-white' : 'text-neutral-400 hover:text-white'
-                }`}
-              >
-                {cat.label}
-              </button>
-            );
-          })}
-        </div>
+        
+        {/* If Clothing selected */}
+        {department === 'clothing' && (
+          <div className="space-y-2">
+            {CLOTHING_CATEGORIES.map((cat) => {
+              const isSelected = category.toLowerCase() === cat.value.toLowerCase();
+              return (
+                <button
+                  key={cat.label}
+                  onClick={() => setCategory(isSelected ? '' : cat.value)}
+                  className={`block w-full text-left text-sm py-0.5 transition-colors ${
+                    isSelected ? 'font-bold text-white' : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* If Footwear selected */}
+        {department === 'footwear' && (
+          <div className="space-y-2">
+            {FOOTWEAR_CATEGORIES.map((cat) => {
+              const isSelected = category.toLowerCase() === cat.value.toLowerCase();
+              return (
+                <button
+                  key={cat.label}
+                  onClick={() => setCategory(isSelected ? '' : cat.value)}
+                  className={`block w-full text-left text-sm py-0.5 transition-colors ${
+                    isSelected ? 'font-bold text-white' : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* If All items selected */}
+        {department === '' && (
+          <div className="space-y-4">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">
+                Footwear
+              </p>
+              <div className="space-y-1.5">
+                {FOOTWEAR_CATEGORIES.slice(1).map((cat) => {
+                  const isSelected = category.toLowerCase() === cat.value.toLowerCase();
+                  return (
+                    <button
+                      key={cat.label}
+                      onClick={() => setCategory(isSelected ? '' : cat.value)}
+                      className={`block w-full text-left text-sm py-0.5 transition-colors ${
+                        isSelected ? 'font-bold text-white' : 'text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">
+                Clothing &amp; Apparel
+              </p>
+              <div className="space-y-1.5">
+                {CLOTHING_CATEGORIES.slice(1).map((cat) => {
+                  const isSelected = category.toLowerCase() === cat.value.toLowerCase();
+                  return (
+                    <button
+                      key={cat.label}
+                      onClick={() => setCategory(isSelected ? '' : cat.value)}
+                      className={`block w-full text-left text-sm py-0.5 transition-colors ${
+                        isSelected ? 'font-bold text-white' : 'text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 3. Shop By Price */}
@@ -141,10 +266,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <div className="space-y-2 text-sm text-neutral-400">
           {[
             { label: 'All Prices', min: 0, max: 50000 },
-            { label: 'Under ₹10,000', min: 0, max: 10000 },
+            { label: 'Under ₹5,000', min: 0, max: 5000 },
+            { label: '₹5,000 - ₹10,000', min: 5000, max: 10000 },
             { label: '₹10,000 - ₹15,000', min: 10000, max: 15000 },
-            { label: '₹15,000 - ₹20,000', min: 15000, max: 20000 },
-            { label: 'Over ₹20,000', min: 20000, max: 50000 },
+            { label: 'Over ₹15,000', min: 15000, max: 50000 },
           ].map((tier) => {
             const isSelected = minPrice === tier.min && maxPrice === tier.max;
             return (
@@ -165,10 +290,12 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
-      {/* 4. Nike Size Grid (Dark bordered buttons) */}
+      {/* 4. Size Selection Grid */}
       <div className="pb-5 border-b border-[#222228]">
         <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-semibold text-white">Size (UK / India)</h4>
+          <h4 className="text-sm font-semibold text-white">
+            {department === 'clothing' ? 'Apparel Size' : department === 'footwear' ? 'Shoe Size (UK)' : 'Size'}
+          </h4>
           {selectedSize && (
             <button
               onClick={() => setSelectedSize('')}
@@ -178,24 +305,60 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             </button>
           )}
         </div>
-        <div className="grid grid-cols-3 gap-1.5">
-          {SIZES.map((sz) => {
-            const isSelected = selectedSize === String(sz);
-            return (
-              <button
-                key={sz}
-                onClick={() => setSelectedSize(isSelected ? '' : String(sz))}
-                className={`py-2 text-xs font-medium rounded border transition-all text-center ${
-                  isSelected
-                    ? 'border-white bg-white text-black font-bold'
-                    : 'border-[#2D2D35] bg-[#141416] text-neutral-300 hover:border-neutral-400'
-                }`}
-              >
-                UK {sz}
-              </button>
-            );
-          })}
-        </div>
+
+        {/* Clothing Sizes */}
+        {showClothingSizes && (
+          <div className="mb-3">
+            {department === '' && (
+              <p className="text-[10px] uppercase font-bold text-neutral-500 mb-1.5">Apparel Sizes</p>
+            )}
+            <div className="grid grid-cols-3 gap-1.5">
+              {CLOTHING_SIZES.map((sz) => {
+                const isSelected = selectedSize.toUpperCase() === sz;
+                return (
+                  <button
+                    key={sz}
+                    onClick={() => setSelectedSize(isSelected ? '' : sz)}
+                    className={`py-2 text-xs font-semibold rounded border transition-all text-center ${
+                      isSelected
+                        ? 'border-white bg-white text-black font-bold'
+                        : 'border-[#2D2D35] bg-[#141416] text-neutral-300 hover:border-neutral-400'
+                    }`}
+                  >
+                    {sz}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Footwear Sizes */}
+        {showFootwearSizes && (
+          <div>
+            {department === '' && (
+              <p className="text-[10px] uppercase font-bold text-neutral-500 mb-1.5">Footwear Sizes (UK)</p>
+            )}
+            <div className="grid grid-cols-3 gap-1.5">
+              {FOOTWEAR_SIZES.map((sz) => {
+                const isSelected = selectedSize === String(sz);
+                return (
+                  <button
+                    key={sz}
+                    onClick={() => setSelectedSize(isSelected ? '' : String(sz))}
+                    className={`py-2 text-xs font-medium rounded border transition-all text-center ${
+                      isSelected
+                        ? 'border-white bg-white text-black font-bold'
+                        : 'border-[#2D2D35] bg-[#141416] text-neutral-300 hover:border-neutral-400'
+                    }`}
+                  >
+                    UK {sz}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 5. Nike Color Swatches */}

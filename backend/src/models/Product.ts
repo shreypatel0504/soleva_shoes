@@ -9,7 +9,7 @@ export interface IProductColor {
 
 export interface IProductVariant {
   sku: string;
-  size: number;
+  size: number | string;
   color: string;
   price?: number;
   stock: number;
@@ -24,6 +24,10 @@ export interface IProductSpecifications {
   outsole?: string;
   origin?: string;
   closure?: string;
+  fabric?: string;
+  fit?: string;
+  care?: string;
+  features?: string;
 }
 
 export interface IProduct extends Document {
@@ -32,6 +36,7 @@ export interface IProduct extends Document {
   brand: string;
   category: string;
   gender: 'men' | 'women' | 'unisex' | 'kids';
+  department?: 'footwear' | 'clothing';
   description: string;
   shortDescription?: string;
   images: string[];
@@ -39,7 +44,7 @@ export interface IProduct extends Document {
   compareAtPrice?: number;
   discount?: number;
   colors: IProductColor[];
-  sizes: number[];
+  sizes: (number | string)[];
   variants: IProductVariant[];
   stock: number;
   sku: string;
@@ -67,7 +72,7 @@ const ProductColorSchema = new Schema<IProductColor>(
 const ProductVariantSchema = new Schema<IProductVariant>(
   {
     sku: { type: String, required: true },
-    size: { type: Number, required: true },
+    size: { type: Schema.Types.Mixed, required: true },
     color: { type: String, required: true },
     price: { type: Number },
     stock: { type: Number, required: true, default: 0 },
@@ -87,6 +92,12 @@ const ProductSchema = new Schema<IProduct>(
       default: 'unisex',
       index: true,
     },
+    department: {
+      type: String,
+      enum: ['footwear', 'clothing'],
+      default: 'footwear',
+      index: true,
+    },
     description: { type: String, required: true },
     shortDescription: { type: String, default: '' },
     images: {
@@ -98,7 +109,7 @@ const ProductSchema = new Schema<IProduct>(
     compareAtPrice: { type: Number, min: 0 },
     discount: { type: Number, default: 0 },
     colors: [ProductColorSchema],
-    sizes: { type: [Number], required: true, default: [7, 8, 9, 10, 11] },
+    sizes: { type: [Schema.Types.Mixed], required: true, default: [7, 8, 9, 10, 11] },
     variants: [ProductVariantSchema],
     stock: { type: Number, required: true, default: 10, min: 0 },
     sku: { type: String, required: true, unique: true, uppercase: true, index: true },

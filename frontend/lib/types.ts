@@ -7,7 +7,7 @@ export interface ProductColor {
 
 export interface ProductVariant {
   sku: string;
-  size: number;
+  size: number | string;
   color: string;
   price?: number;
   stock: number;
@@ -22,6 +22,10 @@ export interface ProductSpecifications {
   outsole?: string;
   origin?: string;
   closure?: string;
+  fabric?: string;
+  fit?: string;
+  care?: string;
+  features?: string;
 }
 
 export interface Product {
@@ -31,6 +35,7 @@ export interface Product {
   brand: string;
   category: string;
   gender: 'men' | 'women' | 'unisex' | 'kids';
+  department?: 'footwear' | 'clothing';
   description: string;
   shortDescription?: string;
   images: string[];
@@ -38,7 +43,7 @@ export interface Product {
   compareAtPrice?: number;
   discount?: number;
   colors: ProductColor[];
-  sizes: number[];
+  sizes: (number | string)[];
   variants?: ProductVariant[];
   stock: number;
   sku: string;
@@ -102,7 +107,7 @@ export interface CartItem {
   product: Product | string;
   name: string;
   image: string;
-  size: number;
+  size: number | string;
   color: string;
   quantity: number;
   price: number;
@@ -120,7 +125,7 @@ export interface OrderItem {
   product: string | Product;
   name: string;
   image: string;
-  size: number;
+  size: number | string;
   color: string;
   quantity: number;
   price: number;

@@ -89,7 +89,7 @@ export const brandApi = {
 // --- Cart Services ---
 export const cartApi = {
   getCart: () => api.get<{ success: boolean; data: { cart: Cart } }>('/cart'),
-  addToCart: (data: { productId: string; size: number; color: string; quantity: number }) =>
+  addToCart: (data: { productId: string; size: number | string; color: string; quantity: number }) =>
     api.post<{ success: boolean; data: { cart: Cart } }>('/cart', data),
   updateCartItem: (itemId: string, quantity: number) =>
     api.put<{ success: boolean; data: { cart: Cart } }>(`/cart/${itemId}`, { quantity }),

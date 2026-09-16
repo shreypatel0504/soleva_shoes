@@ -144,6 +144,47 @@ const MEGA_MENUS: Record<string, MegaMenuColumn[]> = {
       ],
     },
   ],
+  'Clothing': [
+    {
+      title: 'Shop by Category',
+      links: [
+        { name: 'All Clothing & Apparel', href: '/shop?department=clothing', badge: 'New Line' },
+        { name: 'Jackets & Windrunners', href: '/shop?department=clothing&category=jackets' },
+        { name: 'Hoodies & Sweatshirts', href: '/shop?department=clothing&category=hoodies' },
+        { name: 'Performance T-Shirts', href: '/shop?department=clothing&category=t-shirts' },
+        { name: 'Cargo Pants & Joggers', href: '/shop?department=clothing&category=pants' },
+        { name: 'Luxury Tracksuits', href: '/shop?department=clothing&category=tracksuits' },
+      ],
+    },
+    {
+      title: 'Iconic Apparel Drops',
+      links: [
+        { name: 'AeroTech Storm Windrunner', href: '/product/aerotech-storm-windrunner', badge: 'Hero' },
+        { name: 'ThermoKnit 480GSM Hoodie', href: '/product/thermoknit-heavyweight-hoodie', badge: 'Popular' },
+        { name: 'Milano Heritage Tracksuit', href: '/product/milano-heritage-luxury-track-jacket' },
+        { name: 'Apex Technical Cargo Pants', href: '/product/apex-technical-cargo-pants' },
+        { name: 'Velocity Seamless Training Tee', href: '/product/velocity-seamless-training-tee' },
+      ],
+    },
+    {
+      title: 'Activity & Use',
+      links: [
+        { name: 'All-Weather Outerwear', href: '/shop?department=clothing&category=jackets' },
+        { name: 'High-Cadence Training Tops', href: '/shop?department=clothing&category=t-shirts' },
+        { name: 'Muscle-Support Compression', href: '/shop?department=clothing&category=pants' },
+        { name: 'Luxury Loungewear', href: '/shop?department=clothing&category=hoodies' },
+      ],
+    },
+    {
+      title: 'Apparel Innovations',
+      links: [
+        { name: '2.5-Layer Storm DWR Ripstop', href: '/product/aerotech-storm-windrunner' },
+        { name: 'Custom-Milled 480 GSM French Terry', href: '/product/thermoknit-heavyweight-hoodie' },
+        { name: '3D Circular Seamless Anti-Odor Knit', href: '/product/velocity-seamless-training-tee' },
+        { name: 'Italian Double-Knit Tricot', href: '/product/milano-heritage-luxury-track-jacket' },
+      ],
+    },
+  ],
   'Kids': [
     {
       title: "Featured Kids'",
@@ -258,6 +299,7 @@ export const Navbar = () => {
     { name: 'New & Featured', href: '/shop?isNewArrival=true' },
     { name: 'Men', href: '/shop?gender=men' },
     { name: 'Women', href: '/shop?gender=women' },
+    { name: 'Clothing', href: '/shop?department=clothing' },
     { name: 'Kids', href: '/shop?gender=kids' },
     { name: 'Sale', href: '/shop?onSale=true', highlight: true },
     { name: 'SNKRS', href: '/shop?category=sneakers' },

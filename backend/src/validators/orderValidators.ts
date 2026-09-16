@@ -7,7 +7,7 @@ export const createOrderSchema = z.object({
         product: z.string().min(1, 'Product ID is required'),
         name: z.string(),
         image: z.string(),
-        size: z.number(),
+        size: z.union([z.number(), z.string()]),
         color: z.string(),
         quantity: z.number().int().positive(),
         price: z.number().min(0),

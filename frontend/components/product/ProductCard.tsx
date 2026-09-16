@@ -16,7 +16,7 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [selectedColorIdx, setSelectedColorIdx] = useState(0);
-  const [addedSize, setAddedSize] = useState<number | null>(null);
+  const [addedSize, setAddedSize] = useState<number | string | null>(null);
 
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
@@ -45,7 +45,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     toggleWishlist(product);
   };
 
-  const handleQuickSizeSelect = async (e: React.MouseEvent, sz: number) => {
+  const handleQuickSizeSelect = async (e: React.MouseEvent, sz: number | string) => {
     e.preventDefault();
     e.stopPropagation();
     setAddedSize(sz);
@@ -57,12 +57,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   const getSubtitle = () => {
+    const isClothing = product.department === 'clothing';
     const gender = product.gender
       ? product.gender.charAt(0).toUpperCase() + product.gender.slice(1)
       : "Men's";
     const cat = product.category
       ? product.category.charAt(0).toUpperCase() + product.category.slice(1)
-      : 'Shoes';
+      : isClothing ? 'Apparel' : 'Shoes';
+    if (isClothing) {
+      return `${gender}'s Technical ${cat}`;
+    }
     return `${gender} ${cat} Shoes`;
   };
 
@@ -146,12 +150,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Quick Size Selector Overlay on Desktop Hover */}
         <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-3 pt-6 hidden sm:flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
           <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest text-center">
-            Quick Add Size (UK)
+            {product.department === 'clothing' ? 'Quick Add Size' : 'Quick Add Size (UK)'}
           </span>
           <div className="flex items-center justify-center gap-1 flex-wrap">
             {sizes.map((sz) => (
               <button
-                key={sz}
+                key={String(sz)}
                 onClick={(e) => handleQuickSizeSelect(e, sz)}
                 className={`text-[11px] px-2 py-0.5 rounded-md font-medium border transition-all ${
                   addedSize === sz

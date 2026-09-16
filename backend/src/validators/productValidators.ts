@@ -5,6 +5,7 @@ export const productSchema = z.object({
   brand: z.string().min(1, 'Brand is required'),
   category: z.string().min(1, 'Category is required'),
   gender: z.enum(['men', 'women', 'unisex', 'kids']).default('unisex'),
+  department: z.enum(['footwear', 'clothing']).optional().default('footwear'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   shortDescription: z.string().optional(),
   images: z.array(z.string().min(1, 'Image path is required')).min(1, 'At least one image is required'),
@@ -17,7 +18,7 @@ export const productSchema = z.object({
       image: z.string().optional(),
     })
   ).min(1, 'At least one color is required'),
-  sizes: z.array(z.number().positive()).min(1, 'At least one size is required'),
+  sizes: z.array(z.union([z.number(), z.string()])).min(1, 'At least one size is required'),
   stock: z.number().int().min(0, 'Stock cannot be negative'),
   sku: z.string().min(3, 'SKU must be at least 3 characters'),
   isFeatured: z.boolean().optional(),
@@ -34,6 +35,10 @@ export const productSchema = z.object({
       outsole: z.string().optional(),
       origin: z.string().optional(),
       closure: z.string().optional(),
+      fabric: z.string().optional(),
+      fit: z.string().optional(),
+      care: z.string().optional(),
+      features: z.string().optional(),
     })
     .optional(),
 });

@@ -15,6 +15,7 @@ function ShopContent() {
   const router = useRouter();
 
   // Filters State
+  const [department, setDepartment] = useState(searchParams.get('department') || '');
   const [category, setCategory] = useState(searchParams.get('category') || '');
   const [gender, setGender] = useState(searchParams.get('gender') || '');
   const [brand, setBrand] = useState(searchParams.get('brand') || '');
@@ -38,6 +39,7 @@ function ShopContent() {
   // Sync URL query when filters update
   useEffect(() => {
     const params = new URLSearchParams();
+    if (department) params.set('department', department);
     if (category) params.set('category', category);
     if (gender) params.set('gender', gender);
     if (brand) params.set('brand', brand);
@@ -53,7 +55,7 @@ function ShopContent() {
 
     const newUrl = params.toString() ? `/shop?${params.toString()}` : '/shop';
     router.replace(newUrl, { scroll: false });
-  }, [category, gender, brand, selectedSize, selectedColor, minPrice, maxPrice, onSaleOnly, inStockOnly, sort, page, search, router]);
+  }, [department, category, gender, brand, selectedSize, selectedColor, minPrice, maxPrice, onSaleOnly, inStockOnly, sort, page, search, router]);
 
   // Fetch filtered products
   useEffect(() => {
@@ -66,6 +68,7 @@ function ShopContent() {
           sort,
         };
 
+        if (department) queryParams.department = department;
         if (category) queryParams.category = category;
         if (gender) queryParams.gender = gender;
         if (brand) queryParams.brand = brand;
@@ -90,9 +93,10 @@ function ShopContent() {
     };
 
     fetchProducts();
-  }, [category, gender, brand, selectedSize, selectedColor, minPrice, maxPrice, onSaleOnly, inStockOnly, sort, page, search]);
+  }, [department, category, gender, brand, selectedSize, selectedColor, minPrice, maxPrice, onSaleOnly, inStockOnly, sort, page, search]);
 
   const handleReset = () => {
+    setDepartment('');
     setCategory('');
     setGender('');
     setBrand('');
@@ -108,11 +112,21 @@ function ShopContent() {
   };
 
   const getCatalogTitle = () => {
-    if (category) return `${category.charAt(0).toUpperCase() + category.slice(1)} Shoes`;
-    if (gender) return `${gender.charAt(0).toUpperCase() + gender.slice(1)}'s Shoes & Sneakers`;
+    if (department === 'clothing') {
+      if (category) return `${category.charAt(0).toUpperCase() + category.slice(1)} | SOLEVA Apparel`;
+      if (gender) return `${gender.charAt(0).toUpperCase() + gender.slice(1)}'s Technical Apparel`;
+      return 'All Clothing & Apparel';
+    }
+    if (department === 'footwear') {
+      if (category) return `${category.charAt(0).toUpperCase() + category.slice(1)} Shoes`;
+      if (gender) return `${gender.charAt(0).toUpperCase() + gender.slice(1)}'s Footwear`;
+      return 'All Performance Footwear';
+    }
+    if (category) return `${category.charAt(0).toUpperCase() + category.slice(1)}`;
+    if (gender) return `${gender.charAt(0).toUpperCase() + gender.slice(1)}'s Collection`;
     if (onSaleOnly) return 'Sale & Special Offers';
     if (search) return `Search Results for "${search}"`;
-    return 'All Shoes & Sneakers';
+    return 'All Products';
   };
 
   return (
@@ -167,8 +181,17 @@ function ShopContent() {
       </div>
 
       {/* ACTIVE FILTER PILLS */}
-      {(category || gender || brand || selectedSize || selectedColor || minPrice > 0 || maxPrice < 50000 || onSaleOnly) && (
+      {(department || category || gender || brand || selectedSize || selectedColor || minPrice > 0 || maxPrice < 50000 || onSaleOnly) && (
         <div className="flex flex-wrap items-center gap-2 mb-6">
+          {department && (
+            <button
+              onClick={() => setDepartment('')}
+              className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#18181C] border border-[#28282E] rounded-full text-xs font-medium text-neutral-300 hover:text-white capitalize"
+            >
+              <span>Department: {department}</span>
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
           {gender && (
             <button
               onClick={() => setGender('')}
@@ -192,7 +215,7 @@ function ShopContent() {
               onClick={() => setSelectedSize('')}
               className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#18181C] border border-[#28282E] rounded-full text-xs font-medium text-neutral-300 hover:text-white"
             >
-              <span>UK {selectedSize}</span>
+              <span>Size: {selectedSize}</span>
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -232,6 +255,8 @@ function ShopContent() {
         {isSidebarVisible && (
           <aside className="w-60 flex-shrink-0 hidden lg:block sticky top-[148px] max-h-[calc(100vh-160px)] overflow-y-auto no-scrollbar">
             <FilterSidebar
+              department={department}
+              setDepartment={setDepartment}
               category={category}
               setCategory={setCategory}
               gender={gender}
@@ -331,6 +356,8 @@ function ShopContent() {
             </div>
             <div className="flex-1 overflow-y-auto p-4">
               <FilterSidebar
+                department={department}
+                setDepartment={setDepartment}
                 category={category}
                 setCategory={setCategory}
                 gender={gender}

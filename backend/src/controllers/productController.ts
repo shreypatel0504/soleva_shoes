@@ -9,6 +9,7 @@ export const getProducts = async (req: Request, res: Response) => {
       search,
       category,
       brand,
+      department,
       size,
       color,
       minPrice,
@@ -26,6 +27,11 @@ export const getProducts = async (req: Request, res: Response) => {
     } = req.query;
 
     const query: any = { isActive: true };
+
+    // Department filter (footwear, clothing, or all)
+    if (department && department !== 'all') {
+      query.department = (department as string).trim().toLowerCase();
+    }
 
     // Search query
     if (search && typeof search === 'string' && search.trim() !== '') {
@@ -57,11 +63,12 @@ export const getProducts = async (req: Request, res: Response) => {
       query.gender = { $in: [...genders, 'unisex'] };
     }
 
-    // Size filter
+    // Size filter (supports numeric footwear sizes 6-13 and alphanumeric apparel sizes XS-XXL)
     if (size) {
-      const sizes = (size as string).split(',').map(Number).filter((s) => !isNaN(s));
-      if (sizes.length > 0) {
-        query.sizes = { $in: sizes };
+      const rawSizes = (size as string).split(',').map((s) => s.trim());
+      const parsedSizes = rawSizes.map((s) => (isNaN(Number(s)) ? s.toUpperCase() : Number(s)));
+      if (parsedSizes.length > 0) {
+        query.sizes = { $in: parsedSizes };
       }
     }
 
