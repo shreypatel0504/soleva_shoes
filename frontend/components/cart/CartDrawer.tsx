@@ -80,7 +80,7 @@ export const CartDrawer = () => {
                   {/* Image Container on Dark Background */}
                   <div className="relative w-24 h-24 bg-[#161619] border border-[#24242A] rounded-lg overflow-hidden flex-shrink-0">
                     <Image
-                      src={item.image}
+                      src={item.image || '/products/apexlab/orange_profile.jpg'}
                       alt={item.name}
                       fill
                       className="object-cover"

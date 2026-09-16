@@ -249,7 +249,7 @@ export default function AdminProductsPage() {
                     <td className="py-3.5 px-6">
                       <div className="flex items-center gap-3">
                         <div className="relative w-12 h-12 rounded-xl bg-zinc-100 overflow-hidden flex-shrink-0">
-                          <Image src={prod.images[0]} alt={prod.name} fill className="object-cover" />
+                          <Image src={prod.images?.[0] || '/products/apexlab/orange_profile.jpg'} alt={prod.name} fill className="object-cover" />
                         </div>
                         <div>
                           <p className="font-bold text-zinc-950 line-clamp-1">{prod.name}</p>

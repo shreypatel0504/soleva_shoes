@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { Product, IProduct } from '../models/Product';
 import { sendSuccess, sendError } from '../utils/apiResponse';
 
@@ -188,9 +189,66 @@ export const getProductBySlug = async (req: Request, res: Response) => {
   }
 };
 
+export const getFeaturedProducts = async (req: Request, res: Response) => {
+  try {
+    const limit = Number(req.query.limit) || 8;
+    const products = await Product.find({ isActive: true, isFeatured: true })
+      .sort({ rating: -1, createdAt: -1 })
+      .limit(limit)
+      .lean();
+
+    return sendSuccess({
+      res,
+      message: 'Featured products retrieved successfully',
+      data: { products },
+    });
+  } catch (err: any) {
+    return sendError(res, 500, err.message);
+  }
+};
+
+export const getNewArrivalProducts = async (req: Request, res: Response) => {
+  try {
+    const limit = Number(req.query.limit) || 8;
+    const products = await Product.find({ isActive: true, isNewArrival: true })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean();
+
+    return sendSuccess({
+      res,
+      message: 'New arrival products retrieved successfully',
+      data: { products },
+    });
+  } catch (err: any) {
+    return sendError(res, 500, err.message);
+  }
+};
+
+export const getBestSellerProducts = async (req: Request, res: Response) => {
+  try {
+    const limit = Number(req.query.limit) || 8;
+    const products = await Product.find({ isActive: true, isBestSeller: true })
+      .sort({ rating: -1, reviewCount: -1 })
+      .limit(limit)
+      .lean();
+
+    return sendSuccess({
+      res,
+      message: 'Best seller products retrieved successfully',
+      data: { products },
+    });
+  } catch (err: any) {
+    return sendError(res, 500, err.message);
+  }
+};
+
 export const getProductById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return sendError(res, 404, `Product not found with id: ${id}`);
+    }
     const product = await Product.findById(id).lean();
 
     if (!product) {
@@ -243,6 +301,9 @@ export const createProduct = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return sendError(res, 404, 'Product not found');
+    }
     const updates = req.body;
 
     const product = await Product.findById(id);
@@ -267,6 +328,9 @@ export const updateProduct = async (req: Request, res: Response) => {
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return sendError(res, 404, 'Product not found');
+    }
     const product = await Product.findByIdAndDelete(id);
 
     if (!product) {

@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import {
   getProducts,
+  getFeaturedProducts,
+  getNewArrivalProducts,
+  getBestSellerProducts,
   getProductBySlug,
   getProductById,
   createProduct,
@@ -15,6 +18,9 @@ const router = Router();
 
 // Public routes
 router.get('/', getProducts);
+router.get('/featured', getFeaturedProducts);
+router.get('/new-arrivals', getNewArrivalProducts);
+router.get('/bestsellers', getBestSellerProducts);
 router.get('/slug/:slug', getProductBySlug);
 router.get('/:id', getProductById);
 

@@ -43,6 +43,37 @@ export default function LoginPage() {
           </p>
         </div>
 
+        {/* Quick Demo Credentials */}
+        <div className="bg-[#18181C] p-3 rounded-xl border border-[#25252C] space-y-2">
+          <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider block text-center">
+            Quick Demo Accounts (Click to Autofill)
+          </span>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('customer@example.com');
+                setPassword('Customer@123');
+              }}
+              className="px-2.5 py-1.5 rounded-lg bg-[#222228] hover:bg-white hover:text-black transition-all text-left text-[11px] border border-white/5"
+            >
+              <span className="font-bold block text-white">Customer</span>
+              <span className="text-[10px] text-neutral-400 block truncate">customer@example.com</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('admin@soleva.com');
+                setPassword('Admin@123456');
+              }}
+              className="px-2.5 py-1.5 rounded-lg bg-[#222228] hover:bg-white hover:text-black transition-all text-left text-[11px] border border-white/5"
+            >
+              <span className="font-bold block text-[#CCFF00]">Admin Lab</span>
+              <span className="text-[10px] text-neutral-400 block truncate">admin@soleva.com</span>
+            </button>
+          </div>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-1.5">

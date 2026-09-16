@@ -100,7 +100,7 @@ export default function OrderConfirmationPage() {
             {order.items.map((item, idx) => (
               <div key={idx} className="py-3.5 flex items-center gap-4">
                 <div className="relative w-16 h-16 rounded-xl bg-[#18181C] border border-[#26262E] overflow-hidden flex-shrink-0 p-1">
-                  <Image src={item.image} alt={item.name} fill className="object-contain" />
+                  <Image src={item.image || '/products/apexlab/orange_profile.jpg'} alt={item.name} fill className="object-contain" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-xs font-bold text-white truncate">{item.name}</h4>

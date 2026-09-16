@@ -356,7 +356,7 @@ function AccountContent() {
                         {order.items.map((item, idx) => (
                           <div key={idx} className="flex items-center gap-2 bg-[#141416] rounded-lg p-2 pr-3 border border-[#222228]">
                             <div className="relative w-10 h-10 rounded overflow-hidden bg-[#18181C] flex-shrink-0">
-                              <Image src={item.image} alt={item.name} fill className="object-cover" />
+                              <Image src={item.image || '/products/apexlab/orange_profile.jpg'} alt={item.name} fill className="object-cover" />
                             </div>
                             <div className="text-[11px]">
                               <p className="font-bold text-white truncate max-w-[120px]">{item.name}</p>

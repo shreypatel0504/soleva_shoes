@@ -654,7 +654,7 @@ export default function CheckoutPage() {
             {items.map((item, idx) => (
               <div key={idx} className="py-3 flex items-center gap-3">
                 <div className="relative w-14 h-14 rounded-lg bg-[#18181C] border border-[#24242A] overflow-hidden flex-shrink-0">
-                  <Image src={item.image} alt={item.name} fill className="object-cover" />
+                  <Image src={item.image || '/products/apexlab/orange_profile.jpg'} alt={item.name} fill className="object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-xs font-bold text-white truncate">{item.name}</h4>

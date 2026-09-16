@@ -279,7 +279,7 @@ export default function AdminOrdersPage() {
                   {selectedOrder.items.map((it, idx) => (
                     <div key={idx} className="py-2 flex items-center gap-3">
                       <div className="relative w-12 h-12 rounded-lg bg-white overflow-hidden flex-shrink-0">
-                        <Image src={it.image} alt={it.name} fill className="object-cover" />
+                        <Image src={it.image || '/products/apexlab/orange_profile.jpg'} alt={it.name} fill className="object-cover" />
                       </div>
                       <div className="flex-1">
                         <p className="font-bold text-zinc-900">{it.name}</p>

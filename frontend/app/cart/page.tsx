@@ -104,7 +104,7 @@ export default function CartPage() {
                 {/* Shoe Image on Dark Background */}
                 <div className="relative w-28 h-28 sm:w-36 sm:h-36 bg-[#161619] border border-[#24242A] rounded-xl overflow-hidden flex-shrink-0">
                   <Image
-                    src={item.image}
+                    src={item.image || '/products/apexlab/orange_profile.jpg'}
                     alt={item.name}
                     fill
                     className="object-cover"

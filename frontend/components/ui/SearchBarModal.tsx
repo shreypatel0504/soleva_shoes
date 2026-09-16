@@ -124,7 +124,7 @@ export const SearchBarModal: React.FC<SearchBarModalProps> = ({ isOpen, onClose 
                   >
                     <div className="relative w-16 h-16 rounded-lg bg-[#18181C] border border-[#28282E] overflow-hidden flex-shrink-0">
                       <Image
-                        src={product.images[0]}
+                        src={product.images?.[0] || '/products/apexlab/orange_profile.jpg'}
                         alt={product.name}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform"

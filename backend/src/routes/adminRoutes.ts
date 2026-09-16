@@ -23,6 +23,7 @@ router.use(authenticate, requireAdmin);
 
 // Dashboard
 router.get('/dashboard', getDashboardStats);
+router.get('/stats', getDashboardStats);
 
 // Orders
 router.get('/orders', getAllOrders);
